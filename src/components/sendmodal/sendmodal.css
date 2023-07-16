@@ -1,0 +1,21 @@
+.sended {
+    width: 200px;
+    height: 40px;
+    background: var(--color-primary-variant);
+    color: var(--color-white);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 2rem;
+    animation: recolor 2s ease-in;
+}
+
+@keyframes recolor {
+    0% {
+        background-color: var(--color-primary-variant);
+    }
+
+    100% {
+        background-color: lightGreen;
+    }
+}

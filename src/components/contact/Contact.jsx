@@ -1,20 +1,34 @@
-import React from 'react'
+import React, { useState } from 'react'
 import './contact.css'
 import { MdOutlineEmail } from 'react-icons/md'
 import { RiMessengerLine } from 'react-icons/ri'
 import { BsWhatsapp } from 'react-icons/bs'
 import { useRef } from 'react';
 import emailjs from 'emailjs-com';
+import Spinner from '../spinner/Spinner'
+import Sendmodal from '../sendmodal/Sendmodal'
 
 const Contact = () => {
   const form = useRef();
+  const [isSending, setIsSending] = useState(false);
+  const [sended, setSended] = useState(false);
 
   const sendEmail = (e) => {
     e.preventDefault();
 
     emailjs.sendForm('service_3qhwqpm', 'template_jn4j1x7', form.current, 'ajU9PRfTYxPK_Azw3')
-    e.target.reset();
+    setIsSending(true);
+    setTimeout(() => {
+      e.target.reset();
+      setIsSending(false)
+      setSended(true);
+      setTimeout(() => {
+        setSended(false)
+      }, 2000)
+    }, 2000);
   };
+
+
   return (
     <section id='contact'>
       <h5>Si necesitas información</h5>
@@ -46,7 +60,8 @@ const Contact = () => {
           <input type='text' name='name' placeholder='Your Full Name' required />
           <input type='email' name='email' placeholder='Your Email' required/>
           <textarea name='message' rows='7' placeholder='Your Message' required></textarea>
-          <button type='submit' className='btn btn-primary'>Send Message</button>
+          <button type='submit' className='btn btn-primary'>{isSending ? <Spinner /> : 'Enviar Mensaje'}</button>
+          {sended && <Sendmodal />}
         </form>
       </div>
     </section>
